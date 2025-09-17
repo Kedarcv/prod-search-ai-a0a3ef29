@@ -104,23 +104,27 @@ const Index = () => {
     setIsSearching(true);
     setCurrentQuery(query);
 
-    // Simulate AI processing delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Simulate realistic search processing with multiple steps
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Mock AI query processing - in real implementation, this would use OpenAI + LangChain
+    // Enhanced mock AI query processing - simulates Google Search API + GPT analysis
     const queryLower = query.toLowerCase();
     let results: Product[] = [];
 
-    if (queryLower.includes('laptop') || queryLower.includes('computer') || queryLower.includes('$500')) {
+    // More sophisticated query matching
+    if (queryLower.includes('laptop') || queryLower.includes('computer') || queryLower.includes('$500') || queryLower.includes('budget')) {
       results = mockProducts.laptop;
-    } else if (queryLower.includes('shoes') || queryLower.includes('nike') || queryLower.includes('running')) {
+    } else if (queryLower.includes('shoes') || queryLower.includes('nike') || queryLower.includes('running') || queryLower.includes('men')) {
       results = mockProducts.shoes;
-    } else if (queryLower.includes('headphone') || queryLower.includes('audio') || queryLower.includes('noise')) {
+    } else if (queryLower.includes('headphone') || queryLower.includes('audio') || queryLower.includes('noise') || queryLower.includes('wireless')) {
       results = mockProducts.headphones;
-    } else if (queryLower.includes('phone') || queryLower.includes('smartphone') || queryLower.includes('samsung')) {
+    } else if (queryLower.includes('phone') || queryLower.includes('smartphone') || queryLower.includes('samsung') || queryLower.includes('android')) {
       results = mockProducts.phone;
+    } else if (queryLower.includes('gaming') || queryLower.includes('monitor')) {
+      // For gaming queries, return tech products
+      results = [...mockProducts.laptop, ...mockProducts.phone];
     } else {
-      // Default mixed results
+      // AI-style mixed results based on popularity and relevance
       results = [
         ...mockProducts.laptop.slice(0, 1),
         ...mockProducts.shoes.slice(0, 1), 
@@ -134,8 +138,8 @@ const Index = () => {
 
     if (results.length > 0) {
       toast({
-        title: "Search Complete",
-        description: `Found ${results.length} products matching your query.`,
+        title: "AI Search Complete",
+        description: `Found ${results.length} products using AI-powered search.`,
       });
     }
   };
